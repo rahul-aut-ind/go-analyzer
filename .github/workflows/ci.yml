@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Verify modules
+        run: go mod verify
+
+      - name: Run tests
+        run: go test ./... -timeout 120s
+
+      - name: Check coverage
+        run: |
+          go test ./internal/... -coverprofile=coverage.out -timeout 120s
+          go tool cover -func=coverage.out > coverfunc.txt
+          go run ./scripts/check_coverage.go
+        shell: bash
+      
+      - name: go vet
+        run: go vet ./...
