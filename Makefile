@@ -1,7 +1,7 @@
 .PHONY: build test lint coverage install clean
 
 build:
-	go build -o bin/go-analyzer ./cmd
+	go build -o bin/go-analyzer .
 
 test:
 	go test ./... -timeout 120s
@@ -15,7 +15,7 @@ lint:
 	staticcheck ./...
 
 install:
-	go install ./cmd
+	go install .
 
 clean:
 	rm -rf bin/ .goanalyzer/ coverage.out

@@ -1,6 +1,7 @@
-// Package main is the entry point for the go-analyzer CLI tool.
-// It wires together all cobra commands and delegates analysis to internal packages.
-package main
+// Package cmd wires together all cobra commands for the go-analyzer CLI tool
+// and delegates analysis to internal packages.
+// The actual entry point is the root main.go which calls Execute().
+package cmd
 
 import (
 	"fmt"
@@ -33,7 +34,9 @@ var (
 	date    = "unknown"
 )
 
-func main() {
+// Execute is the entry point called by the root main package.
+// It runs the cobra root command and exits with code 1 on error.
+func Execute() {
 	if err := newRootCmd().Execute(); err != nil {
 		os.Exit(1)
 	}

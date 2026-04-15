@@ -8,12 +8,12 @@ before:
 
 builds:
   - id: go-analyzer
-    main: ./cmd
+    main: .
     binary: go-analyzer
     ldflags:
-      - -X main.version={{.Version}}
-      - -X main.commit={{.Commit}}
-      - -X main.date={{.Date}}
+      - -X github.com/rahul-aut-ind/go-analyzer/cmd.version={{.Version}}
+      - -X github.com/rahul-aut-ind/go-analyzer/cmd.commit={{.Commit}}
+      - -X github.com/rahul-aut-ind/go-analyzer/cmd.date={{.Date}}
     goos:
       - linux
       - darwin
