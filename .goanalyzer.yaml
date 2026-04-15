@@ -1,0 +1,24 @@
+# go-analyzer configuration for the go-analyzer project itself
+
+scan:
+  exclude:
+    - testdata/
+
+thresholds:
+  cyclomaticComplexity: 15
+  functionLength: 80
+  coverageMinimum: 70.0
+
+rules:
+  disable: []
+
+dependencies:
+  licensePolicy:
+    deny: []
+
+report:
+  outputDir: .goanalyzer/reports
+  formats:
+    - html
+    - markdown
+  historyLimit: 5
