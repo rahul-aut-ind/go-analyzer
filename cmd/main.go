@@ -264,7 +264,13 @@ func newVersionCmd() *cobra.Command {
 		Use:   "version",
 		Short: "Print version, commit hash, and build date",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Printf("go-analyzer version %s\ncommit:  %s\nbuilt:   %s\n", version, commit, date)
+			fmt.Printf("go-analyzer version %s\n", version)
+			if commit != "none" {
+				fmt.Printf("commit:  %s\n", commit)
+			}
+			if date != "unknown" {
+				fmt.Printf("built:   %s\n", date)
+			}
 		},
 	}
 }
