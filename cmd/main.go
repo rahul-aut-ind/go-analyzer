@@ -6,6 +6,9 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"runtime/debug"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -19,8 +22,6 @@ import (
 	_ "github.com/rahul-aut-ind/go-analyzer/internal/analyzer/race"
 	_ "github.com/rahul-aut-ind/go-analyzer/internal/analyzer/security"
 
-	"strings"
-
 	"github.com/rahul-aut-ind/go-analyzer/internal/analyzer"
 	"github.com/rahul-aut-ind/go-analyzer/internal/config"
 	"github.com/rahul-aut-ind/go-analyzer/internal/engine"
@@ -33,6 +34,35 @@ var (
 	commit  = "none"
 	date    = "unknown"
 )
+
+// init populates version/commit/date from embedded build info when the binary
+// was installed via "go install" (no ldflags applied by GoReleaser).
+func init() {
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return
+	}
+	// Module version (e.g. "v1.0.0") set when installed via go install
+	if version == "dev" && info.Main.Version != "" && info.Main.Version != "(devel)" {
+		version = info.Main.Version
+	}
+	for _, s := range info.Settings {
+		switch s.Key {
+		case "vcs.revision":
+			if commit == "none" && s.Value != "" {
+				if len(s.Value) > 12 {
+					commit = s.Value[:12] // short hash
+				} else {
+					commit = s.Value
+				}
+			}
+		case "vcs.time":
+			if date == "unknown" && s.Value != "" {
+				date = s.Value
+			}
+		}
+	}
+}
 
 // Execute is the entry point called by the root main package.
 // It runs the cobra root command and exits with code 1 on error.
@@ -85,6 +115,10 @@ lint issues, and dead code.`,
 			dir := "."
 			if len(args) == 1 {
 				dir = args[0]
+			}
+			// Resolve to absolute path so reports show the real project path, not "."
+			if absDir, err := filepath.Abs(dir); err == nil {
+				dir = absDir
 			}
 
 			// Load config
