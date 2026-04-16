@@ -121,7 +121,7 @@ func applyDefaults(v *viper.Viper) {
 	v.SetDefault("thresholds.cyclomaticComplexity", 10)
 	v.SetDefault("thresholds.functionLength", 50)
 	v.SetDefault("thresholds.coverageMinimum", 80.0)
-	v.SetDefault("report.outputDir", ".goanalyzer/reports")
-	v.SetDefault("report.formats", []string{"json", "markdown"})
-	v.SetDefault("report.historyLimit", 30)
+	v.SetDefault("report.outputDir", "goanalyzer/reports")
+	v.SetDefault("report.formats", []string{"html", "markdown"})
+	v.SetDefault("report.historyLimit", 5)
 }
