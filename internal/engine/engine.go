@@ -4,6 +4,7 @@ package engine
 
 import (
 	"fmt"
+	"path/filepath"
 	"sort"
 	"sync"
 	"time"
@@ -110,6 +111,19 @@ func Run(opts RunOptions) (*RunResult, error) {
 	}
 
 	rr.Duration = time.Since(start)
+
+	// Normalize file paths to be relative to the scan root.
+	absRoot, err := filepath.Abs(opts.Dir)
+	if err == nil {
+		for i := range rr.Findings {
+			f := rr.Findings[i].File
+			if filepath.IsAbs(f) {
+				if rel, relErr := filepath.Rel(absRoot, f); relErr == nil {
+					rr.Findings[i].File = rel
+				}
+			}
+		}
+	}
 
 	// Sort: severity desc → file asc → line asc.
 	sort.Slice(rr.Findings, func(i, j int) bool {

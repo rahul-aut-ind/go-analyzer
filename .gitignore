@@ -37,3 +37,4 @@ go.work.sum
 # go-analyzer
 .goanalyzer/
 bin/
+goanalyzer/reports

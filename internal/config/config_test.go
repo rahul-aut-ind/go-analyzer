@@ -25,8 +25,8 @@ func TestLoadDefaults(t *testing.T) {
 	if cfg.Report.OutputDir != ".goanalyzer/reports" {
 		t.Errorf("OutputDir default: want .goanalyzer/reports, got %s", cfg.Report.OutputDir)
 	}
-	if cfg.Report.HistoryLimit != 30 {
-		t.Errorf("HistoryLimit default: want 30, got %d", cfg.Report.HistoryLimit)
+	if cfg.Report.HistoryLimit != 5 {
+		t.Errorf("HistoryLimit default: want 5, got %d", cfg.Report.HistoryLimit)
 	}
 	if len(cfg.Report.Formats) != 2 {
 		t.Errorf("Formats default: want 2 entries, got %d", len(cfg.Report.Formats))
