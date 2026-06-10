@@ -5,8 +5,8 @@ go 1.25.0
 require (
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
-	golang.org/x/mod v0.36.0
-	golang.org/x/tools v0.44.0
+	golang.org/x/mod v0.37.0
+	golang.org/x/tools v0.45.0
 )
 
 require (
@@ -21,7 +21,7 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/sync v0.20.0 // indirect
-	golang.org/x/sys v0.43.0 // indirect
+	golang.org/x/sys v0.44.0 // indirect
 	golang.org/x/text v0.36.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 )
